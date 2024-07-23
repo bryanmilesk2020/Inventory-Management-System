@@ -1,0 +1,71 @@
+#include <iostream>
+#include <map>
+#include <string>
+//#define DEBUG_CODE
+
+std::map <std::string, int> addProduct(std::map <std::string, int>& inventory) {
+	std::cout << "What is the product?\n";
+	std::string product;
+	std::cin >> product;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	std::cout << "What is the quantity of the product?\n";
+	int quantity;
+	std::cin >> quantity;
+
+	inventory.insert(std::pair <std::string, int>(product, quantity));
+
+	return inventory;
+
+}
+
+std::map <std::string, int> updateQuantity(std::map <std::string, int>& inventory) {
+	std::cout << "What product do you want to update?\n";
+	std::string product;
+	std::cin >> product;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cout << "What is the new quantity?\n";
+	int quantity;
+	std::cin >> quantity;
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	inventory[product] = quantity;
+
+	return inventory;
+} 
+
+void displayInventory(std::map<std::string, int>& inventory) {
+	for (auto itr = inventory.begin(); itr != inventory.end(); itr++) {
+		std::cout << (*itr).first << " : " << (*itr).second << '\n';
+	}
+}
+
+int main() {
+	std::map <std::string, int> inventory;
+
+	while (true) {
+		std::cout << "Do you want to add a product, update quantities, or display the inventory?\n";
+		std::string answ;
+		std::getline(std::cin, answ);
+
+		if (answ == "add a product") {
+			addProduct(inventory);
+		}
+		else if (answ == "update quantities") {
+			updateQuantity(inventory);
+		}
+		else if (answ == "display the inventory") {
+			displayInventory(inventory);
+		}
+		else
+			std::cout << "Invalid option. Please try again.\n";
+
+#ifdef DEBUG_CODE
+		for (auto itr = inventory.begin(); itr != inventory.end(); itr++) {
+			std::cout << (*itr).first << " : " << (*itr).second << '\n';
+		}
+#endif
+	}
+	
+	
+}
